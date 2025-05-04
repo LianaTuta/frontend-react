@@ -1,6 +1,6 @@
 // apiService.js
 
-const API_BASE_URL = "https://localhost:44304/api"; // Update with your backend URL
+const API_BASE_URL = "http://localhost:5283/api"; // Update with your backend URL
 
 const apiService = {
   request: async (endpoint, method = "GET", data = null, headers = {}) => {

@@ -60,11 +60,15 @@
   transform: translateY(-5px);
 }
 
-.event-image-container {
+.event-image-wrapper {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  position: relative;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .event-image {
@@ -75,21 +79,34 @@
   border-radius: 8px;
 }
 
+.no-image-placeholder {
+  font-size: 0.9rem;
+  color: #888;
+  text-align: center;
+  padding: 1rem;
+}
+
 .event-content {
   padding-top: 15px;
   padding-bottom: 10px;
 }
 
+
 .event-title {
   font-size: 1.8rem;
   color: var(--primary-color);
   margin-bottom: 10px;
+  color: #000 !important;
+  display: block !important;
 }
 
 .event-description {
   font-size: var(--font-size-description);
   color: var(--secondary-color);
   line-height: 1.5;
+  display: block !important;
+  color: #000 !important;
+  display: block !important;
 }
 
 @media (max-width: 768px) {

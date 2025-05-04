@@ -5,12 +5,11 @@ import CreateAccount from "./account/CreateAccount";
 import HomePage from "./HomePage";
 import CreateEventForm from "./events/CreateEvent";
 import EventsPage from "./events/EventsView";
-import Header from "./Header";
+import EventDetailsPage from "./events/EventDetailsPage";
 
 const App = () => {
   return (
     <Router>
-      <Header />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
@@ -18,6 +17,7 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventForm />} />
         <Route path="/all-events" element={<EventsPage />} />
         <Route path="*" element={<CreateAccount />} />
+        <Route path="/event-details/:id" element={<EventDetailsPage />} />
       </Routes>
     </Router>
   );

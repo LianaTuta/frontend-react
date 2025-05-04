@@ -1,0 +1,114 @@
+.event-details-container {
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    position: relative;
+    height: 100vh;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .blurred-card {
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    backdrop-filter: blur(10px); /* Blur effect on background */
+    color: white; /* Set text color to white */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .event-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: white; /* White text for title */
+  }
+  
+  .event-description {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: center;
+    color: white; /* White text for description */
+  }
+  
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: left;
+    color: white; /* White text for section title */
+  }
+  
+  .schedule-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 30px;
+  }
+  
+  .schedule-item {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: left;
+    color: white; /* White text for schedule items */
+  }
+  
+  .schedule-item span {
+    margin-right: 10px;
+  }
+  
+  .event-address {
+    font-size: 18px;
+    color: #ddd;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .order-btn {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .order-btn:hover {
+    background-color: #e55347;
+  }
+  
+  @media (max-width: 768px) {
+    .event-title {
+      font-size: 28px;
+    }
+  
+    .event-description {
+      font-size: 16px;
+    }
+  
+    .section-title {
+      font-size: 20px;
+    }
+  
+    .schedule-item {
+      font-size: 16px;
+    }
+  
+    .order-btn {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+  }
+  
