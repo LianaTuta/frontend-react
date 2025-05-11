@@ -6,18 +6,22 @@ import HomePage from "./HomePage";
 import CreateEventForm from "./events/CreateEvent";
 import EventsPage from "./events/EventsView";
 import EventDetailsPage from "./events/EventDetailsPage";
+import SidebarLayout from "./sidebar/Sidebar";
 
 const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<SidebarLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/create-event" element={<CreateEventForm />} />
         <Route path="/all-events" element={<EventsPage />} />
-        <Route path="*" element={<CreateAccount />} />
+        <Route path="event/:id" element={<EventDetailsPage />} />
+        <Route path="*" element={<EventsPage />} />
         <Route path="/event-details/:id" element={<EventDetailsPage />} />
+        </Route>
       </Routes>
     </Router>
   );

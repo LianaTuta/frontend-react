@@ -1,54 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // To access the location state
+import React, { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import apiService from "../apiService";
 import "../events/EventDetailsPage.css";
+import EventImageCard from "../images/EventImageCard ";
 
 const EventDetailsPage = () => {
-  const location = useLocation();
-  const { eventName, eventDescription, eventImages } = location.state || {}; // Get state passed from parent
+  const { id } = useParams();
+  const { state } = useLocation();
+  const eventFromState = state?.event;
 
-  // Mock data for event schedule and address
-  const eventSchedule = [
-    { date: "2025-05-01", time: "10:00 AM - 12:00 PM" },
-    { date: "2025-05-02", time: "1:00 PM - 3:00 PM" },
-    { date: "2025-05-03", time: "5:00 PM - 7:00 PM" },
-  ];
-
-  const eventAddress = "Borcell Beach, 123 Anywhere St., Any City";
-
-  const [loading, setLoading] = useState(false);
+  const [schedules, setSchedules] = useState([]);
+  const [details, setDetails] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(false); // Simulate data loading
-  }, []);
+    const fetchDetails = async () => {
+      try {
+        const [scheduleRes, detailsRes] = await Promise.all([
+          apiService.get(`eventschedule/event-schedule/${id}`),
+          apiService.get(`eventdetails/event-details/${id}`)
+        ]);
+        console.log(scheduleRes.body.Data);
+        console.log(detailsRes.body.Data);
+        if (scheduleRes.status === 200) {
+          setSchedules(scheduleRes.body.Data);
+        }
 
-  if (loading) {
-    return <p className="loading-text">Loading event details...</p>;
-  }
+        if (detailsRes.status === 200) {
+          setDetails(detailsRes.body.Data);
+        }
+      } catch (err) {
+        setError("Failed to load extra event data.");
+        console.error(err);
+      }
+    };
+
+    fetchDetails();
+  }, [id]);
+
+  if (error) return <p>{error}</p>;
+
+  const { name, description, imagePath } = eventFromState || {};
 
   return (
+    <div className="event-page-wrapper">
     <div className="event-details-container">
-      {/* Background Image */}
-      <div className="background-image">
-        <div className="blurred-card">
-          <h1 className="event-title">{eventName}</h1>
-          <p className="event-description">{eventDescription}</p>
-
-          <h3 className="section-title">Event Schedule</h3>
-          <ul className="schedule-list">
-            {eventSchedule.map((item, index) => (
-              <li key={index} className="schedule-item">
-                <span>{item.date}</span> - <span>{item.time}</span>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="section-title">Event Location</h3>
-          <p className="event-address">{eventAddress}</p>
-
-          <button className="order-btn">Order Now</button>
-        </div>
+      <div className="event-info">
+        <h1>{name}</h1>
+        <p className="event-description">{description}</p>
+        <EventImageCard src={imagePath} alt={name} />
+      </div>
+      <div className="event-schedule">
+        <h2>Schedules</h2>
+        <ul>
+          {schedules.map((s, idx) => (
+            <li key={idx}>
+              <strong>{new Date(s.startDate).toLocaleString()}</strong> –{" "}
+              <strong>{new Date(s.endDate).toLocaleString()}</strong>
+              <br />
+              Location: {s.location}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
+  </div>
+  
   );
 };
 
