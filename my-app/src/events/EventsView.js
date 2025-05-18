@@ -40,7 +40,7 @@ const EventsPage = () => {
 
   return (
     <div className="events-container">
-    <h1 className="page-title">Upcomming events</h1>
+    <h1 className="page-title">Upcoming events</h1>
     <input
       type="text"
       className="event-search"
@@ -48,20 +48,26 @@ const EventsPage = () => {
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
     />
-    <div className="events-list">
-      {filteredEvents.map((event) => (
-        <div className="event-card" key={event.id}>
-          <Link to={`/event-details/${event.id}`}
-                state={{ event }}
-              className="event-card">
+  <div className="events-list">
+  {filteredEvents.map((event) => (
+    <Link
+      to={`/event-details/${event.id}`}
+      state={{ event }}
+      key={event.id}
+      className="event-card"
+    >
+      <div className="event-card-inner">
+        <div className="event-content">
           <h2 className="event-title">{event.name}</h2>
           <p className="event-description">{event.description}</p>
-          <EventImageCard src={event.imagePath} alt={event.name} />
-          </Link>
         </div>
-      ))}
-    </div>
+        <EventImageCard src={event.imagePath} alt={event.name} />
+      </div>
+    </Link>
+  ))}
+</div>
   </div>
+  
    
   );
 };
