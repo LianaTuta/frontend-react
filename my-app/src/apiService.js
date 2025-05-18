@@ -1,6 +1,6 @@
 // apiService.js
 
-const API_BASE_URL = "http://localhost:5283/api"; // Update with your backend URL
+const API_BASE_URL = "https://ticket-service-767515572560.europe-north2.run.app/api"; // Update with your backend URL
 
 const apiService = {
   request: async (endpoint, method = "GET", data = null, headers = {}) => {
