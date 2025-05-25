@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // For routing links
-import "./Header.css"; // Import the updated header styling
+import { Link } from "react-router-dom"; 
+import "./Header.css"; 
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,11 +14,11 @@ const Header = () => {
 
   const handleLoginLogout = () => {
     if (isLoggedIn) {
-      localStorage.removeItem("isLoggedIn"); // Remove login status
+      localStorage.removeItem("isLoggedIn"); 
       setIsLoggedIn(false);
     } else {
       setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true"); // Set login status
+      localStorage.setItem("isLoggedIn", "true"); 
     }
   };
 

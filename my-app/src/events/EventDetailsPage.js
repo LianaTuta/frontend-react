@@ -2,17 +2,35 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import apiService from "../apiService";
 import "../events/EventDetailsPage.css";
-import EventImageCard from "../images/EventImageCard ";
+import EventImageCard from "../images/EventImageCard";
+import { useCart } from "../Order/CartContext";
+import { formatDate } from "../utils/formatDate";
 
 const EventDetailsPage = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const eventFromState = state?.event;
+  const { addToCart } = useCart()
 
   const [schedules, setSchedules] = useState([]);
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
+  const [ticketsBySchedule, setTicketsBySchedule] = useState({});
 
+  const handleAddToCart = (ticket, schedule) => {
+    addToCart({
+      ...ticket,
+      imagePath,
+      eventName: name,
+      scheduleStart: schedule.startDate,
+      scheduleEnd: schedule.endDate,
+      location: schedule.location
+    });
+  };
+  
+  const handleBuyNow = (ticket) => {
+    console.log("Buying now:", ticket);
+  };
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -20,8 +38,7 @@ const EventDetailsPage = () => {
           apiService.get(`eventschedule/event-schedule/${id}`),
           apiService.get(`eventdetails/event-details/${id}`)
         ]);
-        console.log(scheduleRes.body.Data);
-        console.log(detailsRes.body.Data);
+
         if (scheduleRes.status === 200) {
           setSchedules(scheduleRes.body.Data);
         }
@@ -38,34 +55,74 @@ const EventDetailsPage = () => {
     fetchDetails();
   }, [id]);
 
+  useEffect(() => {
+    const fetchTickets = async () => {
+      const results = {};
+      for (const schedule of schedules) {
+        try {
+          const res = await apiService.get(`ticket/${schedule.id}`);
+          if (res.status === 200) {
+            results[schedule.id] = res.body.Data;
+          }
+        } catch (err) {
+          console.error(`Failed to fetch tickets for schedule ${schedule.id}`);
+        }
+      }
+      setTicketsBySchedule(results);
+    };
+
+    if (schedules.length > 0) {
+      fetchTickets();
+    }
+  }, [schedules]);
+  
+
   if (error) return <p>{error}</p>;
 
   const { name, description, imagePath } = eventFromState || {};
 
   return (
     <div className="event-page-wrapper">
-    <div className="event-details-container">
-      <div className="event-info">
-        <h1>{name}</h1>
-        <p className="event-description">{description}</p>
-        <EventImageCard src={imagePath} alt={name} />
-      </div>
-      <div className="event-schedule">
-        <h2>Schedules</h2>
-        <ul>
-          {schedules.map((s, idx) => (
-            <li key={idx}>
-              <strong>{new Date(s.startDate).toLocaleString()}</strong> –{" "}
-              <strong>{new Date(s.endDate).toLocaleString()}</strong>
-              <br />
-              Location: {s.location}
-            </li>
-          ))}
-        </ul>
+      <div className="event-details-container">
+        <div className="event-info">
+          <h1>{name}</h1>
+          <p className="event-description">{description}</p>
+          <EventImageCard src={imagePath} alt={name} />
+        </div>
+
+        <div className="event-schedule">
+          <h2>Schedules</h2>
+          <ul>
+            {schedules.map((s) => (
+              <li key={s.id} className="schedule-block">
+               <strong>{formatDate(s.startDate)}</strong> –{" "}
+               <strong>{formatDate(s.endDate)}</strong>
+                <br />
+                Location: {s.location}
+
+                {ticketsBySchedule[s.id] && ticketsBySchedule[s.id].length > 0 && (
+                <ul className="ticket-list">
+                {ticketsBySchedule[s.id].map((ticket) => (
+                  <li key={ticket.id} className="ticket-item">
+                    <div className="ticket-info">
+                      <strong>{ticket.name}</strong> – ${ticket.price}
+                      <br />
+                      <small>{ticket.description}</small>
+                    </div>
+                    <div className="ticket-actions">
+                    <button onClick={() => handleAddToCart(ticket, s)}>Add to Cart</button>
+                      <button onClick={() => handleBuyNow(ticket)}>Buy Now</button>
+                    </div>
+                  </li>
+                ))}
+                </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  
   );
 };
 

@@ -53,3 +53,42 @@
 .event-schedule p {
   margin: 0.5rem 0;
 }
+
+.schedule-block {
+  margin-bottom: 1.5rem;
+}
+
+.ticket-list {
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+  padding-left: 1rem;
+  list-style-type: disc;
+}
+
+.ticket-list li {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.ticket-item {
+  margin-bottom: 1em;
+}
+
+.ticket-actions {
+  margin-top: 0.5em;
+}
+
+.ticket-actions button {
+  margin-right: 0.5em;
+  padding: 6px 12px;
+  border: none;
+  background-color: #322c28;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ticket-actions button:hover {
+  background-color: #646269;
+}
+

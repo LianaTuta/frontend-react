@@ -1,0 +1,53 @@
+.app-header {
+    height: var(--header-height, 60px);
+    background-color: #fff;
+    color: #20232a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    gap: 0.5rem;
+  }
+  
+  .app-title {
+    font-size: 1.1rem;
+  }
+  
+  .cart-section {
+    position: relative;
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .cart-section:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: #e60023;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  

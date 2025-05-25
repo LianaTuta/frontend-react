@@ -20,7 +20,7 @@ const CreateEventForm = () => {
     formData.append("Name", name);
     formData.append("Description", description);
     formData.append("EventDate", eventDate);
-    formData.append("Image", image); // Attach the image
+    formData.append("Image", image); 
   };
 
   return (

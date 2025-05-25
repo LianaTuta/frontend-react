@@ -1,13 +1,14 @@
 import React from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import "../sidebar/SideBarLayout.css";
+import Header from "./Header";
 
 
 const SidebarLayout = () => {
     const navigate = useNavigate();
   
-    const handleLogout = () => {
-      localStorage.clear(); // or your custom logout logic
+    const handleLogout = () => {//
+      localStorage.clear();  
       navigate("/login");
     };
   
@@ -27,10 +28,13 @@ const SidebarLayout = () => {
             <button className="logout-button" onClick={handleLogout}>Logout</button>
           </div>
         </aside>
-  
-        <main className="content-area">
-          <Outlet />
-        </main>
+    
+        <div className="main-area">
+          <Header /> 
+          <main className="content-area">
+            <Outlet />
+          </main>
+        </div>
       </div>
     );
   };

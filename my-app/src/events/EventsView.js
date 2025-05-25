@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import apiService from "../apiService.js";
 import "../events/Events.css";
 import { Link } from "react-router-dom";
-import EventImageCard from "../images/EventImageCard ";
+import EventImageCard from "../images/EventImageCard";
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);

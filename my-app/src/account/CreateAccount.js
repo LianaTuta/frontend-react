@@ -22,7 +22,6 @@ const CreateAccount = () => {
   const navigate = useNavigate();
 
   const handleCreateAccount = async () => {
-    // Reset form errors before validation
     setFormError({
       firstName: !firstName,
       lastName: !lastName,
@@ -30,8 +29,6 @@ const CreateAccount = () => {
       password: !password,
       birthDate: !birthDate,
     });
-
-    // Ensure all required fields are filled
     if (!firstName || !lastName || !email || !password || !birthDate) {
       setMessage(
         "First name, last name, email, password, and birthdate are required."

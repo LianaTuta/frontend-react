@@ -1,6 +1,7 @@
-// apiService.js
 
-const API_BASE_URL = "https://ticket-service-767515572560.europe-north2.run.app/api"; // Update with your backend URL
+
+const API_BASE_URL = "http://localhost:5283/api";
+//"https://ticket-service-767515572560.europe-north2.run.app/api"; 
 
 const apiService = {
   request: async (endpoint, method = "GET", data = null, headers = {}) => {
@@ -12,12 +13,13 @@ const apiService = {
       },
       body: data ? JSON.stringify(data) : null,
     };
+    console.log(data);
     const token = localStorage.getItem("bearer");
 
     if (token) {
-      options.headers["Authorization"] = `Bearer ${token}`;
+      options.headers["Authorization"] = `Bearer ${token.trim()}`;
     }
-
+    console.log(options.headers["Authorization"]);
     try {
       const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
 
