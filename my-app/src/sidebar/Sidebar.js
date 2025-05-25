@@ -7,7 +7,7 @@ import Header from "./Header";
 const SidebarLayout = () => {
     const navigate = useNavigate();
   
-    const handleLogout = () => {//
+    const handleLogout = () => {
       localStorage.clear();  
       navigate("/login");
     };
