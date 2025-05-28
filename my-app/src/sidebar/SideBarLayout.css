@@ -1,7 +1,7 @@
 :root {
-  --sidebar-width: 220px;
-  --sidebar-collapsed-width: 0px;
-  --header-height: 60px;
+  --sidebar-width: 15vw;
+  --sidebar-collapsed-width: 0vw;
+  --header-height: 8vh;
   --bg-dark: #20232a;
   --bg-hover: #333;
   --text-light: #fff;
@@ -120,9 +120,40 @@
 .sidebar-top {
   overflow-y: auto;
   flex: 1;
-  padding-right: 4px;
+  padding-right: 0.5rem;
 }
 
 .sidebar-bottom {
   margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70vw;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-layout.collapsed .sidebar {
+    transform: translateX(0);
+  }
+
+  .main-area {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .sidebar-title,
+  .sidebar-menu li a,
+  .logout-button {
+    text-align: left;
+    writing-mode: horizontal-tb; 
+    transform: rotate(0deg);     
+    white-space: nowrap;
+  }
+
+  .sidebar-menu li {
+    text-align: left;
+    margin-bottom: 1.2rem;
+  }
 }
