@@ -6,41 +6,40 @@ import { formatDate } from "../utils/formatDate";
 import apiService from "../apiService";
 import { useNavigate } from "react-router-dom";
 
-export const  CartPage = () => {
-  const { cartItems, clearCart , removeItemByIndex} = useCart();
+export const CartPage = () => {
+  const { cartItems, clearCart, removeItemByIndex } = useCart();
   const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
   const handleCheckout = async () => {
     try {
-        const now = new Date().toISOString();
-       const  orderTickets = cartItems.map((item) => ({
-            id: item.id,
-            startDate: now
-          }));
-      
-        const response =   await apiService.request(
-            "order/place-order",
-            "POST",
-            { orderTickets: orderTickets }
-          );
+      const now = new Date().toISOString();
+      const orderTickets = cartItems.map((item) => ({
+        id: item.id,
+        startDate: now,
+      }));
 
-        console.log(response);
-        if (response.status === 200) {
-            const returnUrl = response.body?.Data?.returnUrl;
-            if (returnUrl) {
-            window.location.href = returnUrl;
-            } 
-          alert("Order placed successfully!");
-          clearCart();
-          navigate("/confirmation");
-        } else {
-          alert("Failed to place order. Please try again.");
+      const response = await apiService.request(
+        "order/place-order",
+        "POST",
+        { orderTickets: orderTickets }
+      );
+
+      if (response.status === 200) {
+        const returnUrl = response.body?.Data?.returnUrl;
+        if (returnUrl) {
+          window.location.href = returnUrl;
         }
-      } catch (error) {
-        console.error("Checkout error:", error);
-        alert("An error occurred during checkout.");
+        alert("Order placed successfully!");
+        clearCart();
+        navigate("/confirmation");
+      } else {
+        alert("Failed to place order. Please try again.");
       }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("An error occurred during checkout.");
+    }
   };
 
   const handleRemove = (index) => {
@@ -54,36 +53,35 @@ export const  CartPage = () => {
         <p>Your cart is empty.</p>
       ) : (
         <>
-          <ul className="cart-list">
+          <div className="cart-list">
             {cartItems.map((item, index) => (
-              <li key={index} className="cart-item">
-               <div className="cart-image-wrapper">
-                <EventImageCard src={item.imagePath} alt={item.name} />
+              <div key={index} className="cart-item">
+                <div className="cart-image-wrapper">
+                  <EventImageCard src={item.imagePath} alt={item.name} />
                 </div>
                 <div className="cart-item-details">
-                <div className="cart-item-header">
+                  <div className="cart-item-header">
                     <strong>{item.name}</strong>
                     <span className="cart-item-price">${item.price}</span>
-                </div>
-                <small>{item.description}</small>
-                <br />
-                <small>
+                  </div>
+                  <div className="cart-line">{item.description}</div>
+                  <div className="cart-line">
                     {formatDate(item.scheduleStart)} – {formatDate(item.scheduleEnd)}
-                </small>
-                <br />
-                <small>Location: {item.location}</small>
-                <br />
-                <small>Event: {item.eventName}</small>
+                  </div>
+                  <div className="cart-line">Location: {item.location}</div>
+                  <div className="cart-line">Event: {item.eventName}</div>
                 </div>
-              <button onClick={() => handleRemove(index)}>Remove</button>
-            </li>
-            
+                <button onClick={() => handleRemove(index)}>Remove</button>
+              </div>
             ))}
-          </ul>
-          <div className="cart-summary">
-            <strong>Total:</strong> ${total.toFixed(2)}
-            <button onClick={handleCheckout}>Checkout</button>
           </div>
+          <div className="cart-summary">
+            <div className="cart-total-amount">
+                <span>Total:</span>
+                <span>${total.toFixed(2)}</span>
+            </div>
+            <button onClick={handleCheckout}>Checkout</button>
+            </div>
         </>
       )}
     </div>

@@ -9,10 +9,9 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const token = localStorage.getItem("token"); // Retrieve token
-
+      const token = localStorage.getItem("token"); 
       if (!token) {
-        navigate("/login"); // Redirect to login if not authenticated
+        navigate("/login");
         return;
       }
 

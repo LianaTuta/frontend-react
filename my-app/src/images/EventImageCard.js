@@ -11,6 +11,7 @@ const EventImageCard = ({ src, alt }) => {
           src={src}
           alt={alt || "event image"}
           className="image"
+            loading="lazy"
           onError={() => setHasError(true)}
         />
       ) : (

@@ -1,0 +1,30 @@
+.banner {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: #ffe0e0;
+    color: #b13649;
+    padding: 12px 18px;
+    border: 1px solid #ffcccc;
+    border-radius: 8px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .banner-link {
+    background-color: #b13649;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .banner-link:hover {
+    background-color: #8c2436;
+  }
+  

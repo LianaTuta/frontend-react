@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/forms.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import apiService from "../apiService.js";
 
 const LoginPage = () => {
@@ -12,11 +12,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     const model = { email, password };
     try {
-      const response = await apiService.request(
-        "useraccount/login",
-        "POST",
-        model
-      );
+      const response = await apiService.request("useraccount/login", "POST", model);
       const token = response.body.Data.token;
       if (token) {
         localStorage.setItem("bearer", token);
@@ -26,13 +22,12 @@ const LoginPage = () => {
       }
     } catch (error) {
       setError("Login failed. Please check your credentials.");
-      console.error("Login error:", error);
     }
   };
 
   return (
     <div className="form-container">
-      <header className="form-header">
+      <div className="form-header">
         <h2>Login</h2>
         <form className="create-account-form">
           <div className="form-field">
@@ -45,7 +40,6 @@ const LoginPage = () => {
               className="input-field"
             />
           </div>
-
           <div className="form-field">
             <label>Password</label>
             <input
@@ -56,14 +50,20 @@ const LoginPage = () => {
               className="input-field"
             />
           </div>
-
-          <button type="button" onClick={handleLogin} className="submit-btn">
-            Login
-          </button>
-
+          <div className="form-button-row">
+            <button type="button" onClick={handleLogin} className="submit-btn">
+              Login
+            </button>
+          </div>
           {error && <p className="error-message">{error}</p>}
+          <p className="account-link">
+            Don’t have an account?{" "}
+            <Link to="/create-account" className="text-link">
+              Create one
+            </Link>
+          </p>
         </form>
-      </header>
+      </div>
     </div>
   );
 };

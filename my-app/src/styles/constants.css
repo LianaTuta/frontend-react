@@ -1,0 +1,12 @@
+:root {
+  --font-family-base: "Roboto", sans-serif;
+
+  --color-bg-white: #fff;
+  --color-bg-beige: #0d0da4;
+  --color-text: #1b2229;
+  --color-gray : #3d3d44;
+  --color-dark-red :  #c20808bb;
+  --color-dark-blue : #0d10c6b9;
+  --shadow-soft: rgba(0, 0, 0, 0.06);
+  }
+  

@@ -1,7 +1,7 @@
 .app-header {
     height: var(--header-height, 60px);
-    background-color: #fff;
-    color: #20232a;
+    background-color: #20232a;
+    color: var(--color-bg-dark);
     display: flex;
     align-items: center;
     justify-content: space-between;

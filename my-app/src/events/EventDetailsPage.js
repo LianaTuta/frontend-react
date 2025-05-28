@@ -5,6 +5,8 @@ import "../events/EventDetailsPage.css";
 import EventImageCard from "../images/EventImageCard";
 import { useCart } from "../Order/CartContext";
 import { formatDate } from "../utils/formatDate";
+import { useNavigate } from "react-router-dom";
+import Banner from "../sidebar/Banner";
 
 const EventDetailsPage = () => {
   const { id } = useParams();
@@ -13,11 +15,17 @@ const EventDetailsPage = () => {
   const { addToCart } = useCart()
 
   const [schedules, setSchedules] = useState([]);
+  const [showBanner, setShowBanner] = useState(false);
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);
   const [ticketsBySchedule, setTicketsBySchedule] = useState({});
-
+  const isLoggedIn = !!localStorage.getItem("bearer");
+  const navigate = useNavigate();
   const handleAddToCart = (ticket, schedule) => {
+    if (!isLoggedIn) {
+      setShowBanner(true);
+      return;
+    }
     addToCart({
       ...ticket,
       imagePath,
@@ -27,11 +35,15 @@ const EventDetailsPage = () => {
       location: schedule.location
     });
   };
+
+
   
   const handleBuyNow = (ticket) => {
     console.log("Buying now:", ticket);
   };
+  
   useEffect(() => {
+
     const fetchDetails = async () => {
       try {
         const [scheduleRes, detailsRes] = await Promise.all([
@@ -81,7 +93,13 @@ const EventDetailsPage = () => {
 
   const { name, description, imagePath } = eventFromState || {};
 
-  return (
+  return (<>
+    {showBanner && (
+      <Banner
+        message="Please log in to add tickets to your cart."
+        onClose={() => setShowBanner(false)}
+      />
+    )}
     <div className="event-page-wrapper">
       <div className="event-details-container">
         <div className="event-info">
@@ -123,6 +141,7 @@ const EventDetailsPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,13 +1,13 @@
 :root {
-  --primary-color: #333;
-  --secondary-color: #666;
-  --background-color: #f9f9f9;
-  --card-background-color: #fff;
-  --hover-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #1a1a2e;
+  --secondary-color: hsl(224, 30%, 71%);
+  --background-color: #f2f4faea;
+  --card-background-color: #ffffffcb;
+  --hover-color: rgba(0, 0, 0, 0.06);
   --max-width: 1200px;
   --padding: 2rem;
   --card-padding: 1.5rem;
-  --card-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --card-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
   --transition-duration: 0.3s;
   --font-size-title: 2.5rem;
   --font-size-description: 1.1rem;
@@ -22,7 +22,7 @@
   margin: 0 auto;
   background-color: var(--background-color);
   border-radius: 8px;
-  box-shadow: 0 4px 8px var(--hover-color);
+  box-shadow: 0 4px 12px var(--hover-color);
 }
 
 .page-title {
@@ -48,60 +48,38 @@
 }
 
 .event-card {
-  display: flex;
-  flex-direction: column;
   background-color: var(--card-background-color);
   padding: var(--card-padding);
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: var(--card-shadow);
-  transition: transform var(--transition-duration) ease;
+  transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  display: flex;
+  flex-direction: column;
+  width: var(--card-width);
   height: 100%;
-  text-decoration: none;
 }
 
 .event-card:hover {
   transform: translateY(-5px);
-}
-
-.event-card-inner {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .event-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  padding-top: 1rem;
+  padding-bottom: 0.8rem;
 }
 
 .event-title {
   font-size: 1.8rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
-  color: #000 !important;
+  font-weight: 600;
 }
 
 .event-description {
   font-size: var(--font-size-description);
   color: var(--secondary-color);
-  line-height: 1.5;
-  color: #000 !important;
-}
-
-.event-image-container {
-  margin-top: auto;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.event-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  line-height: 1.6;
 }
 
 .event-search {
@@ -112,6 +90,22 @@
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.event-image-container {
+  position: relative;
+  width: 100%;
+  height: var(--image-height);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.event-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 a {

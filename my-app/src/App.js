@@ -9,6 +9,8 @@ import EventDetailsPage from "./events/EventDetailsPage";
 import SidebarLayout from "./sidebar/Sidebar";
 import { CartProvider } from "./Order/CartContext";
 import { CartPage } from "./Order/CartPage"
+import MyOrdersPage from "./Order/MyOrdersPage";
+import OrderDetailsPage from "./Order/OrderDetailsPage";
 
 const App = () => {
   return (
@@ -16,16 +18,18 @@ const App = () => {
 
     <Router>
       <Routes>
-        <Route path="/" element={<SidebarLayout />}>
+         <Route path="/" element={<SidebarLayout />}>
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/my-orders" element={<MyOrdersPage />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/create-event" element={<CreateEventForm />} />
         <Route path="/all-events" element={<EventsPage />} />
         <Route path="*" element={<EventsPage />} />
         <Route path="/event-details/:id" element={<EventDetailsPage />} />
-        </Route>
+        <Route path="/order-details" element={<OrderDetailsPage />} />
+         </Route>
       </Routes>
     </Router>
     </CartProvider>
