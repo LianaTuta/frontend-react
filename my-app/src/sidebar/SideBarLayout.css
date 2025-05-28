@@ -1,10 +1,11 @@
+@import "../styles/constants.css";
 :root {
   --sidebar-width: 15vw;
   --sidebar-collapsed-width: 0vw;
   --header-height: 8vh;
-  --bg-dark: #20232a;
-  --bg-hover: #333;
-  --text-light: #fff;
+  --bg-dark:  var(--bg-color-dark);
+  --bg-hover: var(--bg-hover-dark);
+  --text-light: var(--text-light-color);
 }
 
 .sidebar-layout {

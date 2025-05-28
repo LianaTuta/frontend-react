@@ -8,5 +8,11 @@
   --color-dark-red :  #c20808bb;
   --color-dark-blue : #0d10c6b9;
   --shadow-soft: rgba(0, 0, 0, 0.06);
+
+  --bg-color-dark: #20232a;
+  --bg-hover-dark: #333;
+  --text-light-color: #fff;
+
+  --light-blue-color : hsl(222, 52%, 95%);
   }
   

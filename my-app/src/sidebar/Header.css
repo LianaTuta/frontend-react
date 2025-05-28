@@ -1,3 +1,4 @@
+@import "../styles/constants.css";
 .app-header {
     height: var(--header-height, 60px);
     background-color: #20232a;
@@ -52,7 +53,7 @@
   }
   
   
-  .toggle-button {
+.toggle-button {
   background: none;
   border: none;
   color: white;

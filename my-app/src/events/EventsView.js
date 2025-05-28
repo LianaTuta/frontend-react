@@ -56,13 +56,16 @@ const EventsPage = () => {
       key={event.id}
       className="event-card"
     >
-      <div className="event-card-inner">
-        <div className="event-content">
-          <h2 className="event-title">{event.name}</h2>
-          <p className="event-description">{event.description}</p>
-        </div>
+          <div className="event-card-inner">
+      <div className="event-content">
+        <h2 className="event-title">{event.name}</h2>
+        <p className="event-description">{event.description}</p>
+      </div>
+      <div className="event-image-container">
         <EventImageCard src={event.imagePath} alt={event.name} />
       </div>
+    </div>
+
     </Link>
   ))}
 </div>
