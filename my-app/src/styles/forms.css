@@ -8,19 +8,24 @@
 }
 
 .form-container {
-  padding: 2rem;
-  margin-left: 220px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;       
+  padding: 4rem 1rem;             
+  min-height: 100vh;              
+  box-sizing: border-box;
+  overflow: visible;              
 }
-
 .form-header {
   background-color: var(--color-bg-white);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   width: 100%;
   max-width: 440px;
+  box-sizing: border-box;
+  overflow-y: auto;               
+  max-height: 90vh;                
 }
 
 .form-header h2 {
@@ -129,18 +134,18 @@
 }
 
 @media (max-width: 768px) {
-  .form-header {
-    padding: 25px;
-    width: 100%;
-    max-width: 380px;
+  .form-container {
+    align-items: flex-start;
+    padding-top: 1rem;
   }
 
-  .form-field input {
-    font-size: 14px;
+  .form-header {
+    margin-top: 2rem;
   }
 
   .submit-btn {
-    padding: 10px;
-    font-size: 16px;
+    width: 100%;
   }
+
+  
 }
