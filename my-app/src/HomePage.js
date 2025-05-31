@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiService from "./apiService"; 
+import apiService from "./Common/apiService"; 
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);

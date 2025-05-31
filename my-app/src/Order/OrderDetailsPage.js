@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import apiService from "../apiService";
+import apiService from "../Common/apiService";
 import "./CartPage.css";
 import { formatDate } from "../utils/formatDate";
 import EventImageCard from "../images/EventImageCard";
@@ -21,7 +21,6 @@ const OrderDetailsPage = () => {
       setLoading(false);
       return;
     }
-
     const fetchOrderAndEvents = async () => {
       try {
         const orderResponse = await apiService.request(`order/${orderId}`, "GET");

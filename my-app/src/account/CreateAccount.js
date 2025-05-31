@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/forms.css";
 import { useNavigate } from "react-router-dom";
-import apiService from "../apiService.js";
+import apiService from "../Common/apiService.js";
 import { Roles } from "../constants/roleEnum.js";
 
 const CreateAccount = () => {

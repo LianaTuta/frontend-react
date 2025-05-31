@@ -34,17 +34,19 @@
     padding: 8px;
     border-radius: 6px;
     transition: background-color 0.2s ease;
+    color : var(--light-blue-color);
   }
   
   .cart-section:hover {
     background-color: #f1f1f1;
+ 
   }
   
   .cart-badge {
     position: absolute;
     top: -4px;
     right: -6px;
-    background: #e60023;
+    background: #8a1e2b;;
     color: white;
     font-size: 0.7rem;
     padding: 2px 6px;

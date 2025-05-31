@@ -2,7 +2,7 @@
 :root {
   --sidebar-width: 15vw;
   --sidebar-collapsed-width: 0vw;
-  --header-height: 8vh;
+  --header-height: var(--header-height);
   --bg-dark:  var(--bg-color-dark);
   --bg-hover: var(--bg-hover-dark);
   --text-light: var(--text-light-color);
@@ -38,19 +38,18 @@
 
 .app-header {
   height: var(--header-height);
-  background-color: var(--bg-dark);
-  color: var(--text-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
-  box-sizing: border-box;
-  width: 100%;
+  padding: 0 1.5rem;
+  background-color: var(--bg-dark);
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   z-index: 1000;
 }
+
 
 .main-area {
   margin-left: var(--sidebar-width);
@@ -78,7 +77,6 @@
 .sidebar-title {
   font-size: 1.2rem;
   margin-bottom: 1.2rem;
-  border-bottom: 1px solid #444;
   padding-bottom: 0.5rem;
 }
 
@@ -126,6 +124,61 @@
 
 .sidebar-bottom {
   margin-top: 1rem;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+  gap: 1rem;
+}
+
+.sidebar-title {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--text-light-color);
+}
+
+.close-sidebar-button {
+  background: none;
+  border: none;
+  color: var(--text-light-color);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.close-sidebar-button:hover {
+  color: #ccc;
 }
 
 @media (max-width: 768px) {

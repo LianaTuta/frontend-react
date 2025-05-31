@@ -1,0 +1,71 @@
+@import "../styles/constants.css";
+
+.editable-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-edit-pair.inline {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.text-edit-pair.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.inline-text {
+  font-size: 1rem;
+  line-height: 1.4;
+  display: inline-block;
+}
+
+.edit-button-row {
+  display: inline-flex;
+  align-items: center;
+  margin: 0; 
+}
+
+.edit-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.edit-button-inline {
+  background-color: var(--bg-color-dark);
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-button-inline:hover {
+  background-color: #33334d;
+}
+
+.edit-button-inline.small {
+  margin-top: 4px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
+
+.input-field {
+  font-size: 1rem;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: auto;
+}
+
+.error-text {
+  color: var(--color-dark-red);
+  font-size: 13px;
+  margin-top: 4px;
+}

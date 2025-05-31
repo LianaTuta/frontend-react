@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiService from "../apiService";
+import apiService from "../Common/apiService";
 import "./MyOrdersPage.css";
 import { formatDate } from "../utils/formatDate";
 import { useNavigate } from "react-router-dom";
@@ -70,17 +70,19 @@ const MyOrdersPage = () => {
                     Your order is almost there! Just one step left — <strong>complete your payment</strong> to lock in your tickets and secure your spot.
                 </p>
                 )}
-          
-            <div className="order-footer">
-              <span>Total: ${order.totalPrice}</span>
-              <button className="details-btn" onClick={() => navigate("/order-details", { state: { orderId : order.id} })}>
-                    View Details
-             </button>
+          <div className="order-footer">
+            <span className="order-total">Total: ${order.totalPrice}</span>
+            <div className="order-actions">
+              <button
+                className="details-btn"
+                onClick={() => navigate("/order-details", { state: { orderId: order.id } })}
+              >
+                View Details
+              </button>
               {order.step < 4 && (
                 <button
                   className="pay-btn"
                   onClick={() => {
-                    
                     window.location.href = order.paymentUrl;
                   }}
                 >
@@ -88,6 +90,7 @@ const MyOrdersPage = () => {
                 </button>
               )}
             </div>
+          </div>
           </div>
         ))
       )}

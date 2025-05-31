@@ -3,14 +3,15 @@ import { useCart } from "./CartContext";
 import "./CartPage.css";
 import EventImageCard from "../images/EventImageCard";
 import { formatDate } from "../utils/formatDate";
-import apiService from "../apiService";
+import apiService from "../Common/apiService";
 import { useNavigate } from "react-router-dom";
+import useAuthValidation from "../Common/useAuthValidation";
 
 export const CartPage = () => {
   const { cartItems, clearCart, removeItemByIndex } = useCart();
   const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
-
+  useAuthValidation();
   const handleCheckout = async () => {
     try {
       const now = new Date().toISOString();

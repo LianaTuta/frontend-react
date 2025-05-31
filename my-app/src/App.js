@@ -3,14 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./account/LoginPage";
 import CreateAccount from "./account/CreateAccount";
 import HomePage from "./HomePage";
-import CreateEventForm from "./events/CreateEvent";
+import CreateEventForm from "./events/AddEvent";
 import EventsPage from "./events/EventsView";
-import EventDetailsPage from "./events/EventDetailsPage";
+import EventDetailsPage from "./events/eventDetails/EventDetailsPage";
 import SidebarLayout from "./sidebar/Sidebar";
 import { CartProvider } from "./Order/CartContext";
 import { CartPage } from "./Order/CartPage"
 import MyOrdersPage from "./Order/MyOrdersPage";
 import OrderDetailsPage from "./Order/OrderDetailsPage";
+import AddEvent from "./events/AddEvent";
+import ConfigureEvents from "./events/ConfigureEvents";
 
 const App = () => {
   return (
@@ -27,7 +29,9 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventForm />} />
         <Route path="/all-events" element={<EventsPage />} />
         <Route path="*" element={<EventsPage />} />
-        <Route path="/event-details/:id" element={<EventDetailsPage />} />
+        <Route path="/event-details" element={<EventDetailsPage />} />
+        <Route path="/add-event" element={<AddEvent />} />
+        <Route path="/configure-event" element={<ConfigureEvents />} />
         <Route path="/order-details" element={<OrderDetailsPage />} />
          </Route>
       </Routes>

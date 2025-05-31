@@ -1,0 +1,30 @@
+@import "../../styles/constants.css";
+.event-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+   
+  .event-description {
+    margin-top: 0.5rem;
+    color: #444;
+  }
+
+  .inline-text.text-event-name {
+    font-size: 1.8rem !important;
+    font-weight: bold !important;
+    line-height: 1.2;
+    display: inline-block;
+  }
+
+  .inline-text.text-description-name {
+    font-size: 1.5rem !important;
+    line-height: 1.2;
+    display: inline-block;
+  }
+
+  @media (max-width: 768px) {
+    .text-event-description {
+      font-size: 1rem;
+    }
+  }
