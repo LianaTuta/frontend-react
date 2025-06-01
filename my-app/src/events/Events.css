@@ -119,6 +119,12 @@ a:hover {
   color: inherit;
 }
 
+.button-container {
+  display: flex !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  margin-bottom: 1rem;
+}
 
 @media (max-width: 768px) {
   :root {

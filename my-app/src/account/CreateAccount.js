@@ -1,38 +1,36 @@
 import React, { useState } from "react";
-import "../styles/forms.css";
-import { useNavigate } from "react-router-dom";
-import apiService from "../Common/apiService.js";
-import { Roles } from "../constants/roleEnum.js";
+import "../styles/forms.css"; 
+import { useNavigate, Link } from "react-router-dom";
+import apiService from "../Common/apiService";
+import { Roles } from "../constants/roleEnum";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 const CreateAccount = () => {
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [formError, setFormError] = useState({
-    firstName: false,
-    lastName: false,
-    email: false,
-    password: false,
-    birthDate: false,
-  });
+  const [formError, setFormError] = useState({});
+
   const navigate = useNavigate();
 
   const handleCreateAccount = async () => {
-    setFormError({
+    const errors = {
       firstName: !firstName,
       lastName: !lastName,
       email: !email,
       password: !password,
       birthDate: !birthDate,
-    });
-    if (!firstName || !lastName || !email || !password || !birthDate) {
-      setMessage(
-        "First name, last name, email, password, and birthdate are required."
-      );
+    };
+
+    setFormError(errors);
+
+    if (Object.values(errors).some(Boolean)) {
+      setMessage("First name, last name, email, password, and birthdate are required.");
       return;
     }
 
@@ -40,26 +38,26 @@ const CreateAccount = () => {
       firstName,
       middleName,
       lastName,
-      birthDate,
+      birthDate: birthDate?.toISOString().split("T")[0],
       email,
       password,
-      roleid: Roles.MANAGER,
+      roleid: Roles.CUSTOMER,
     };
 
     try {
-      await apiService
-        .request("useraccount/create-account", "POST", newUser, {
-          "Content-Type": "application/json",
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            setMessage("Account created successfully! You can now log in.");
-            navigate("/login");
-          } else {
-            setMessage(response.message || "Failed to create account.");
-          }
-        })
-        .catch((ex) => console.log(ex));
+      const response = await apiService.request(
+        "useraccount/create-account",
+        "POST",
+        newUser,
+        { "Content-Type": "application/json" }
+      );
+
+      if (response.status === 200) {
+        setMessage("Account created successfully!");
+        navigate("/login");
+      } else {
+        setMessage(response.message || "Failed to create account.");
+      }
     } catch (error) {
       console.error("Error:", error);
       setMessage("Error creating account. Please try again.");
@@ -67,99 +65,84 @@ const CreateAccount = () => {
   };
 
   return (
-    <div className="form-container">
-      <header className="form-header">
+    <div className="login-container">
+      <div className="login-card">
         <h2>Create Account</h2>
-        <form className="create-account-form">
-          <div className="form-field">
-            <label className={formError.firstName ? "required" : ""}>
-              First Name{" "}
-              {formError.firstName && <span className="asterisk">*</span>}
-            </label>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className={`input-field ${formError.firstName ? "error" : ""}`}
-            />
-          </div>
 
-          <div className="form-field">
-            <label>Middle Name (Optional)</label>
-            <input
-              type="text"
-              placeholder="Middle Name"
-              value={middleName}
-              onChange={(e) => setMiddleName(e.target.value)}
-              className="input-field"
-            />
-          </div>
+        <div className="form-group">
+          <label>First Name</label>
+          <input
+            type="text"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
 
-          <div className="form-field">
-            <label className={formError.lastName ? "required" : ""}>
-              Last Name{" "}
-              {formError.lastName && <span className="asterisk">*</span>}
-            </label>
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className={`input-field ${formError.lastName ? "error" : ""}`}
-            />
-          </div>
+        <div className="form-group">
+          <label>Middle Name (Optional)</label>
+          <input
+            type="text"
+            placeholder="Middle Name"
+            value={middleName}
+            onChange={(e) => setMiddleName(e.target.value)}
+          />
+        </div>
 
-          <div className="form-field">
-            <label className={formError.birthDate ? "required" : ""}>
-              Birth Date{" "}
-              {formError.birthDate && <span className="asterisk">*</span>}
-            </label>
-            <input
-              type="date"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              className={`input-field ${formError.birthDate ? "error" : ""}`}
-            />
-          </div>
+        <div className="form-group">
+          <label>Last Name</label>
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
 
-          <div className="form-field">
-            <label className={formError.email ? "required" : ""}>
-              Email {formError.email && <span className="asterisk">*</span>}
-            </label>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={`input-field ${formError.email ? "error" : ""}`}
-            />
-          </div>
+        <div className="form-group">
+          <label>Birth Date</label>
+          <DatePicker
+            selected={birthDate}
+            onChange={(date) => setBirthDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Select your birth date"
+            maxDate={new Date()}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+          />
+        </div>
 
-          <div className="form-field">
-            <label className={formError.password ? "required" : ""}>
-              Password{" "}
-              {formError.password && <span className="asterisk">*</span>}
-            </label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`input-field ${formError.password ? "error" : ""}`}
-            />
-          </div>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-          <button
-            type="button"
-            onClick={handleCreateAccount}
-            className="submit-btn"
-          >
-            Sign Up
-          </button>
-        </form>
-        <p>{message}</p>
-      </header>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <button type="button" className="login-btn" onClick={handleCreateAccount}>
+          Sign Up
+        </button>
+
+        {message && <div className="error-message">{message}</div>}
+
+        <div className="login-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </div>
+      </div>
     </div>
   );
 };

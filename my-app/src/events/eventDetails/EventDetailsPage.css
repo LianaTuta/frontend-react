@@ -173,7 +173,6 @@
   margin-bottom: 0.5rem;
 }
 
-
 @media (max-width: 768px) {
   .event-details-container {
     flex-direction: column;

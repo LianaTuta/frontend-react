@@ -29,7 +29,6 @@ const EventDetailsPage = () => {
   const [message, setMessage] = useState("");
 
 
-
   const [validationErrors, setValidationErrors] = useState({});
  
 
@@ -64,6 +63,7 @@ const EventDetailsPage = () => {
     }
     setTicketsBySchedule(ticketMap);
   };
+
 
   const fetchSchedules = async () => {
     try {
@@ -222,7 +222,7 @@ const EventDetailsPage = () => {
           {isManager && (
             <div className="event-details-header-row">
              <button
-              className="submit-btn"
+              className="login-btn"
               onClick={handleSave}
               disabled={saving || hasValidationErrors}
             >
@@ -247,6 +247,7 @@ const EventDetailsPage = () => {
         onTicketFieldChange={handleTicketFieldChange }
         validationErrors={validationErrors}
         setValidationErrors={setValidationErrors}
+        eventId={event.id}
       />
         </div>
       </div>

@@ -13,6 +13,8 @@ import MyOrdersPage from "./Order/MyOrdersPage";
 import OrderDetailsPage from "./Order/OrderDetailsPage";
 import AddEvent from "./events/AddEvent";
 import ConfigureEvents from "./events/ConfigureEvents";
+import AddSchedulePage from "./events/eventDetails/AddSchedule";
+import AddTicketForm from "./events/eventDetails/AddTicket";
 
 const App = () => {
   return (
@@ -32,6 +34,8 @@ const App = () => {
         <Route path="/event-details" element={<EventDetailsPage />} />
         <Route path="/add-event" element={<AddEvent />} />
         <Route path="/configure-event" element={<ConfigureEvents />} />
+        <Route path="/add-schedule" element={<AddSchedulePage />} />
+        <Route path="/add-ticket" element={<AddTicketForm />} />
         <Route path="/order-details" element={<OrderDetailsPage />} />
          </Route>
       </Routes>

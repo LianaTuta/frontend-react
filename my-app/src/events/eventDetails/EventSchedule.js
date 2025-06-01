@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./EventSchedule.css"
+import "./EventSchedule.css";
 import EditableDateField from "../../Common/EditableDateField";
 import EditableTextField from "../../Common/EditableTextFileld";
 import { FaDollarSign } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EventSchedule = ({
   schedules,
@@ -13,41 +14,70 @@ const EventSchedule = ({
   onScheduleFieldChange,
   validationErrors,
   setValidationErrors,
-  onTicketFieldChange
+  onTicketFieldChange,
+  eventId,
 }) => {
+  const navigate = useNavigate();
   const [editingFields, setEditingFields] = useState({});
   const [tempFields, setTempFields] = useState({});
 
   const toggleEdit = (id, field, originalValue) => {
-    setEditingFields(prev => ({
+    setEditingFields((prev) => ({
       ...prev,
       [id]: { ...(prev[id] || {}), [field]: true },
     }));
-    setTempFields(prev => ({
+    setTempFields((prev) => ({
       ...prev,
       [id]: { ...(prev[id] || {}), [field]: originalValue },
     }));
   };
 
   const confirmChange = (id, field, value) => {
-    console.log("confirm change ", id, field, value);
     const now = new Date();
-  
-    const schedule = schedules.find(s => s.id === id);
+
+    const schedule = schedules.find((s) => s.id === id);
     const start = field === "startDate" ? value : schedule?.startDate;
     const end = field === "endDate" ? value : schedule?.endDate;
-  
 
     const errors = {};
-  
+
     if (field === "startDate" && new Date(start) < now) {
       errors.startDate = "Start date cannot be in the past.";
     }
-  
+
     if (field === "endDate" && new Date(end) <= new Date(start)) {
       errors.endDate = "End date must be after the start date.";
     }
-  
+
+    if (field === "price") {
+        const normalized = value.trim().replace(",", ".");
+        const decimalRegex = /^\d*\.?\d+$/;
+      
+        if (!decimalRegex.test(normalized)) {
+          errors.price = "Price must be a valid positive number.";
+        } else {
+          const priceVal = parseFloat(normalized);
+          if (priceVal < 0) {
+            errors.price = "Price must be a number >= 0.";
+          }
+        }
+      }
+
+      if (field === "numberOfAvailableTickets") {
+        const trimmedValue = value.trim();
+        const intRegex = /^\d+$/;
+      
+        if (!intRegex.test(trimmedValue)) {
+          errors.numberOfAvailableTickets = "Available tickets must be a non-negative integer.";
+        } else {
+          const intVal = parseInt(trimmedValue, 10);
+          if (intVal < 0) {
+            errors.numberOfAvailableTickets = "Available tickets must be 0 or more.";
+          }
+        }
+      }
+
+
     if (Object.keys(errors).length > 0) {
       setValidationErrors((prev) => ({
         ...prev,
@@ -55,31 +85,32 @@ const EventSchedule = ({
       }));
       return;
     }
-  
+
     setValidationErrors((prev) => ({
       ...prev,
       [id]: { ...(prev[id] || {}), [field]: null },
     }));
-  
-    onScheduleFieldChange(id, field, value);
-  
+
+    if (field === "price") value = parseFloat(value);
+    if (field === "numberOfAvailableTickets") value = parseInt(value, 10) || 0;
+
+    if (field === "location" || field === "startDate" || field === "endDate") {
+      onScheduleFieldChange(id, field, value);
+    } else {
+      onTicketFieldChange(id, field, value);
+    }
+
     setEditingFields((prev) => ({
       ...prev,
       [id]: { ...(prev[id] || {}), [field]: false },
     }));
+
   };
 
   const discardChange = (id, field) => {
-    setEditingFields(prev => ({
+    setEditingFields((prev) => ({
       ...prev,
-      [id]: { ...(prev[id] || {}), [field]: false }
-    }));
-  };
-
-  const handleTempChange = (id, field, value) => {
-    setTempFields(prev => ({
-      ...prev,
-      [id]: { ...(prev[id] || {}), [field]: value },
+      [id]: { ...(prev[id] || {}), [field]: false },
     }));
   };
 
@@ -87,20 +118,28 @@ const EventSchedule = ({
     <div className="event-schedule">
       <h1>Schedules</h1>
       <div className="schedule-container">
-        {schedules.map(s => (
-          <div key={s.id} className="schedule-block">
+        {isManager && (
+          <button
+            className="login-btn"
+            onClick={() => navigate("/add-schedule", { state: { eventId: eventId } })}
+          >
+            + Add Schedule
+          </button>
+        )}
 
+        {schedules.map((s) => (
+          <div key={s.id} className="schedule-block">
             <div className="location-inline-wrapper">
-            <span className="location-label">Location:</span>
-            <EditableTextField
+              <span className="location-label">Location:</span>
+              <EditableTextField
                 fieldKey="location"
                 value={s.location}
                 isManager={isManager}
                 maxLength={30}
-                onConfirm={(key,val) => confirmChange(s.id, key , val)}
+                onConfirm={(key, val) => confirmChange(s.id, key, val)}
                 onDiscard={() => discardChange(s.id, "location")}
                 displayClassName="location-value"
-            />
+              />
             </div>
 
             <div className="schedule-dates-row">
@@ -110,6 +149,7 @@ const EventSchedule = ({
                 isManager={isManager}
                 onConfirm={(date) => confirmChange(s.id, "startDate", date)}
                 onDiscard={() => discardChange(s.id, "startDate")}
+                error={validationErrors?.[s.id]?.startDate}
               />
               <div className="arrow-separator">→</div>
               <EditableDateField
@@ -118,73 +158,97 @@ const EventSchedule = ({
                 isManager={isManager}
                 onConfirm={(date) => confirmChange(s.id, "endDate", date)}
                 onDiscard={() => discardChange(s.id, "endDate")}
+                error={validationErrors?.[s.id]?.endDate}
               />
             </div>
+
             {ticketsBySchedule[s.id] ? (
-                ticketsBySchedule[s.id].length > 0 ? (
-                    <div className="ticket-list">
-                    {ticketsBySchedule[s.id].map((ticket) => (
-                        <div key={ticket.id} className="ticket-item">
-                                <div className="ticket-header-row">
-                                    
-                                    <EditableTextField
-                                        fieldKey="name"
-                                        value={ticket.name}
-                                        maxLength={30}
-                                        isManager={isManager}
-                                        onConfirm={(key, val) => onTicketFieldChange(ticket.id, key, val)}
-                                        onDiscard={() => {}}
-                                        className="ticket-title edit-below"
-                                    />
+              ticketsBySchedule[s.id].length > 0 ? (
+                <div className="ticket-list">
+                      {isManager && (
+                        <button
+                            className="login-btn"
+                            style={{ marginBottom: "1rem" }}
+                            onClick={() => navigate("/add-ticket", { state: { scheduleId: s.id } })}
+                        >
+                            + Add Ticket
+                        </button>
+                        )}
+                  {ticketsBySchedule[s.id].map((ticket) => (
+                    <div key={ticket.id} className="ticket-item">
+                     
+                      <div className="ticket-header-row">
+                        <EditableTextField
+                          fieldKey="name"
+                          value={ticket.name}
+                          maxLength={30}
+                          isManager={isManager}
+                          onConfirm={(key, val) => confirmChange(ticket.id, key, val)}
+                          onDiscard={() => discardChange(ticket.id, "name")}
+                          className="ticket-title edit-below"
+                        />
 
-                                <div className="ticket-price-wrapper">
-                                <FaDollarSign className="currency-icon" />
-                                <EditableTextField
-                                    fieldKey="price"
-                                    value={ticket.price.toString()}
-                                    isManager={isManager}
-                                    onConfirm={(key, val) => onTicketFieldChange(ticket.id, key, val)
-                                    }
-                                    onDiscard={() => {}}
-                                    className="ticket-price-edit"
-                                    displayClassName="ticket-price-text"
-                                    editButtonBelow={true} 
-                                />
-                                </div>
-
-                                </div>
-
-                        <div className="ticket-description">
-                            <EditableTextField
-                            fieldKey="description"
-                            value={ticket.description}
-                            maxLength={200}
+                        <div className="ticket-price-wrapper">
+                          <div className="arrow-separator">→</div>
+                          <FaDollarSign className="currency-icon" />
+                          <EditableTextField
+                            fieldKey="price"
+                            value={ticket.price.toString()}
                             isManager={isManager}
-                            onConfirm={(key, val) => onTicketFieldChange(ticket.id, key, val)}
-                            onDiscard={() => {}}
-                            as="textarea"
-                            className="ticket-description-edit"
-                            />
+                            onConfirm={(key, val) => confirmChange(ticket.id, key, val)}
+                            onDiscard={() => discardChange(ticket.id, "price")}
+                            displayClassName="ticket-price-text edit-below"
+                            editButtonBelow={true}
+                            error={validationErrors?.[ticket.id]?.price}
+                          />
                         </div>
+                      </div>
 
-                        <div className="ticket-actions">
-                            <button className="submit-btn" onClick={() => handleAddToCart(ticket, s)}>
-                            Add to Cart
-                            </button>
-                            <button className="submit-btn" onClick={() => handleBuyNow(ticket)}>
-                            Buy Now
-                            </button>
+                      <div className="ticket-description">
+                        <EditableTextField
+                          fieldKey="description"
+                          value={ticket.description}
+                          maxLength={200}
+                          isManager={isManager}
+                          onConfirm={(key, val) => confirmChange(ticket.id, key, val)}
+                          onDiscard={() => discardChange(ticket.id, "description")}
+                          as="textarea"
+                        />
+                      </div>
+
+                      {isManager && (
+                          <div className="ticket-price-wrapper">
+                            <span className="arrow-separator">Number of available tickets:</span>
+                          <EditableTextField
+                            fieldKey="numberOfAvailableTickets"
+                            value={ticket.numberOfAvailableTickets?.toString() || "0"}
+                            maxLength={10}
+                            isManager={isManager}
+                            onConfirm={(key, val) => confirmChange(ticket.id, key, val)}
+                            onDiscard={() => discardChange(ticket.id, "numberOfAvailableTickets")}
+                            displayClassName="ticket-available-count-text"
+                            error={validationErrors?.[ticket.id]?.numberOfAvailableTickets}
+                          />
                         </div>
-                        </div>
-                    ))}
+                      )}
+
+                      <div className="ticket-actions">
+                        <button className="submit-btn" onClick={() => handleAddToCart(ticket, s)}>
+                          Add to Cart
+                        </button>
+                        <button className="submit-btn" onClick={() => handleBuyNow(ticket)}>
+                          Buy Now
+                        </button>
+                      </div>
                     </div>
-                ) : (
-                    <p>No tickets available.</p>
-                )
-                ) : (
-                <p>Loading tickets...</p>
-                )}
-
+                  ))}
+                </div>
+              ) : (
+                <p>No tickets available.</p>
+              )
+            ) : (
+              <p>Loading tickets...</p>
+            )}
           </div>
         ))}
       </div>

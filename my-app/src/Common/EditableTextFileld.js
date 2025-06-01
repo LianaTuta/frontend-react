@@ -13,6 +13,7 @@ const EditableTextField = ({
   className = "",
   displayClassName = "",
   editButtonBelow = false, 
+  error = null, 
 }) => {
   const [editing, setEditing] = useState(false);
   const [temp, setTemp] = useState(value || "");
@@ -79,8 +80,10 @@ const EditableTextField = ({
             </button>
           </div>
         )}
+        
       </div>     
       )}
+       {error && <div className="error-text">{error}</div>}
     </div>
   );
 };

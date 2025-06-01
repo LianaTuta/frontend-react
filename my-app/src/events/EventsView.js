@@ -59,7 +59,7 @@ const EventsPage = () => {
       {isManager && (
         <div className="button-container">
           <button
-            className="submit-btn"
+            className="login-btn"
             onClick={() => navigate("/add-event")}
           >
             Configure Events

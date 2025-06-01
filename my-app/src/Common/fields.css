@@ -51,9 +51,9 @@
 }
 
 .edit-button-inline.small {
-  margin-top: 4px;
   padding: 2px 6px;
   font-size: 0.8rem;
+  vertical-align: middle;
 }
 
 .input-field {
@@ -68,4 +68,14 @@
   color: var(--color-dark-red);
   font-size: 13px;
   margin-top: 4px;
+}
+
+.error-text {
+  color: var(--color-dark-red);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.input-field.error {
+  border-color: var(--color-dark-red);
 }

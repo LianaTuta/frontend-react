@@ -9,30 +9,37 @@ const apiService = {
     const options = {
       method,
       headers: {
-        "Content-Type": "application/json",
         ...headers,
       },
-      body: data ? JSON.stringify(data) : null,
+      body: null,
     };
+  
+    if (data instanceof FormData) {
+      options.body = data;
+    } else if (data) {
+      options.headers["Content-Type"] = "application/json";
+      options.body = JSON.stringify(data);
+    }
+  
     const token = localStorage.getItem("bearer");
-
     if (token) {
       options.headers["Authorization"] = `Bearer ${token.trim()}`;
     }
+  
     try {
       const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
-
+  
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
-
+  
       const contentType = response.headers.get("content-type");
       let responseBody = null;
-
+  
       if (contentType && contentType.includes("application/json")) {
         responseBody = await response.json();
       }
-
+  
       return { status: response.status, body: responseBody };
     } catch (error) {
       console.error("API Error:", error);
@@ -40,6 +47,7 @@ const apiService = {
     }
   },
 
+  
   post: (endpoint, data, headers) => {
     return apiService.request(endpoint, "POST", data, headers);
   },

@@ -1,203 +1,210 @@
-@import "../styles/constants.css";
+@import "./constants.css";
+:root {
+  --color-primary: var(--bg-color-dark);
+  --color-accent: var(--color-dark-blue);
+  --color-bg: #f4f6f8;
+  --color-white: #ffffff;
+  --color-gray: #ccc;
+  --color-text: #222;
+  --color-error: var(  --color-dark-red);
+  --font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-family-base);
+  font-family: var(--font-base);
 }
 
-.form-container {
+body {
+  background-color: var(--color-bg);
+}
+
+.login-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;       
-  padding: 4rem 1rem;             
-  min-height: 100vh;              
-  box-sizing: border-box;
-  overflow: visible;              
+  justify-content: center;   
+  align-items: flex-start;  
+  padding: 4rem 1rem;        
+  min-height: 100vh;
+  background-color: var(--color-bg);
 }
-.form-header {
-  background-color: var(--color-bg-white);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+.login-card {
+  background-color: var(--color-white);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 440px;
-  box-sizing: border-box;
-  overflow-y: auto;               
-  max-height: 90vh;                
+  max-width: 400px;
 }
 
-.form-header h2 {
-  font-size: 24px;
-  margin-bottom: 1.5rem;
-  color: var(--color-text);
+.login-card h2 {
   text-align: center;
-  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+  font-size: 1.75rem;
 }
 
-.form-field {
-  margin-bottom: 24px;
-  position: relative;
+.form-group {
+  margin-bottom: 1.25rem;
+  width: 100%;
 }
 
-.form-field label {
+.form-group label {
   display: block;
-  font-size: 15px;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: var(--color-gray);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: var(--color-text);
 }
 
-.asterisk {
-  color: var(--color-dark-red);
-  margin-left: 5px;
-}
-
-.input-field {
+.form-group input {
+  width: 100%;
   padding: 10px 12px;
-  font-size: 15px;
   border: 1px solid var(--color-gray);
   border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  border-color: var(--color-accent);
   outline: none;
-  transition: border-color 0.3s ease;
+}
+
+.login-btn {
   width: 100%;
-}
-
-.input-field:focus {
-  border-color: var(--color-dark-blue);
-}
-
-.input-field.error {
-  border-color: var(--color-dark-red);
-}
-
-.submit-btn {
-  background-color: var(--color-text);
-  color: var(--color-bg-white);
+  padding: 12px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border: none;
-  padding: 10px 16px;
-  font-size: 15px;
-  font-weight: 600;
   border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
-  background-color: var(--color-dark-blue);
-}
-
-.submit-btn:disabled {
-  background-color: var(--color-gray);
-  cursor: not-allowed;
+.login-btn:hover {
+  background-color: var(--color-accent);
 }
 
 .error-message {
-  color: var(--color-dark-red);
-  font-size: 14px;
-  margin-top: 10px;
+  color: var(--color-error);
+  font-size: 0.95rem;
+  font-weight: 600;  
+  margin-top: 0.75rem;
   text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.2px; 
 }
 
-.form-field input[type="date"] {
-  padding: 10px 12px;
-  font-size: 15px;
-  border: 1px solid var(--color-text);
-  border-radius: 6px;
-  width: 100%;
-}
-
-.form-button-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.account-link {
-  margin-top: 20px;
+.login-footer {
+  margin-top: 1rem;
   text-align: center;
-  font-size: 14px;
-  color: var(--color-text);
+  font-size: 0.9rem;
 }
 
-.account-link .text-link {
-  color: var(--color-dark-blue);
+.login-footer a {
+  color: var(--color-accent);
   text-decoration: none;
   font-weight: 500;
 }
 
-.account-link .text-link:hover {
+.login-footer a:hover {
   text-decoration: underline;
 }
 
+
+
+.react-datepicker-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+
+.react-datepicker__input-container {
+  width: 100% !important;
+}
+
+
+.react-datepicker__input-container input {
+  width: 100% !important;
+  padding: 10px 12px;
+  border: 1px solid var(--color-gray);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--font-base);
+  box-sizing: border-box;
+}
+
 .form-button-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  margin-bottom: 1rem;
 }
 
-.custom-file-upload {
-  position: relative;
+
+
+textarea.input-field {
+  resize: vertical; 
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid var(--color-gray);
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.custom-file-upload input[type="file"] {
-  display: none;
+textarea.input-field:focus {
+  border-color: var(--color-accent);
 }
+
+
+select.input-field {
+  font-family: inherit;
+  background-color: var( --light-blue-color);
+  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid var(--color-gray);
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  color : black;
+  box-sizing: border-box;
+  background-color: white;
+  appearance: none; 
+}
+
+select.input-field option:checked,
+select.input-field option:hover {
+  background-color: var( --light-blue-color); 
+  color: #1f1c57; 
+}
+
+
+select.input-field:focus {
+  border-color: var(--color-accent);
+}
+
 
 .custom-file-btn {
   display: inline-block;
-  text-align: center;
-  color: white !important; 
-  background-color: var(--color-text);
-}
-
-.char-count {
-  font-size: 12px;
-  color: var(--color-gray);
-  text-align: right;
-  margin-top: 4px;
-}
-
-.custom-file-upload {
-  display: inline-block;
-  background-color: #20232a;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white) !important;
   padding: 10px 12px;
   border-radius: 6px;
   cursor: pointer;
   text-align: center;
-}
-.custom-file-upload input {
-  display: none;
-}
-.char-count {
-  font-size: 0.8rem;
-  text-align: right;
-  color: #777;
-  margin-top: 2px;
+  font-weight: 600;
+  width: 100%;           
+  box-sizing: border-box;
+  line-height: 1.5;      
 }
 
+.custom-file-btn:hover {
+  background-color: var(--color-accent); 
+  color: var(--color-white);
+}
 
 .hidden-file-input {
   display: none;
-}
-
-@media (max-width: 768px) {
-  .form-container {
-    align-items: flex-start;
-    padding-top: 1rem;
-  }
-
-  .form-header {
-    margin-top: 2rem;
-  }
-
-  .submit-btn {
-    width: 100%;
-  }
-
-  
 }

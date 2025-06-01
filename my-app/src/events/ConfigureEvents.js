@@ -13,8 +13,8 @@ const ConfigureEvents = () => {
   }
 
   return (
-    <div className="form-container">
-      <div className="form-header">
+    <div className="login-container">
+      <div className="login-card">
         <h2>Event Management Hub</h2>
         <p className="account-link" style={{ marginBottom: "1.5rem" }}>
           Welcome! As a manager, you're in charge of curating amazing experiences for your community.
@@ -24,7 +24,7 @@ const ConfigureEvents = () => {
         <div className="form-button-row">
           <button
             onClick={() => navigate("/add-event")}
-            className="submit-btn"
+            className="login-btn"
           >
             ➕ Create a New Event
           </button>
@@ -33,7 +33,7 @@ const ConfigureEvents = () => {
         <div className="form-button-row">
           <button
             onClick={() => navigate("/all-events")}
-            className="submit-btn"
+            className="login-btn"
           >
             ✏️ Manage Existing Events
           </button>

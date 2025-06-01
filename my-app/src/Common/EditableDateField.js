@@ -11,7 +11,8 @@ const EditableDateField = ({
   isManager = false,
   onConfirm,
   onDiscard,
-  className = ""
+  className = "",
+  error = null
 }) => {
   const [editing, setEditing] = useState(false);
   const [temp, setTemp] = useState(new Date(value));
@@ -23,13 +24,13 @@ const EditableDateField = ({
   }, [value, editing]);
 
   const handleConfirm = () => {
-    onConfirm(temp); // Send selected date to parent
+    onConfirm(temp);
     setEditing(false);
   };
 
   const handleDiscard = () => {
     setTemp(new Date(value));
-    onDiscard?.(); // Optional discard
+    onDiscard?.();
     setEditing(false);
   };
 
@@ -78,6 +79,7 @@ const EditableDateField = ({
         )}
       </div>
       )}
+       {error && <div className="error-text">{error}</div>}
     </div>
   );
 };
