@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/forms.css";  // shared styles for all forms
+import "../styles/forms.css";  
 import { useNavigate } from "react-router-dom";
 import apiService from "../Common/apiService.js";
 import useAuthValidation from "../Common/useAuthValidation.js";
