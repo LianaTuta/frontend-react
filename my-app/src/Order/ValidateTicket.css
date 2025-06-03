@@ -1,0 +1,98 @@
+/* ValidateTicketPage.css */
+
+.validate-ticket-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .validate-ticket-page h2 {
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+    color: #222;
+    text-align: center;
+  }
+  
+  .ticket-info p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .ticket-info strong {
+    color: #444;
+  }
+  
+  .validate-ticket-page .error {
+    color: #b00020;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .validate-ticket-page p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  .validate-ticket-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .ticket-info p {
+    margin: 0.5rem 0;
+  }
+  
+  .manager-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center; 
+  }
+  
+  .validate-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .invalidate-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .validate-btn:disabled,
+  .invalidate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 480px) {
+    .validate-ticket-page {
+      padding: 1rem;
+      margin: 1rem;
+    }
+  
+    .validate-ticket-page h2 {
+      font-size: 1.5rem;
+    }
+  }
+  

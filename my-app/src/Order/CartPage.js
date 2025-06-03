@@ -31,15 +31,12 @@ export const CartPage = () => {
         if (returnUrl) {
           window.location.href = returnUrl;
         }
-        alert("Order placed successfully!");
         clearCart();
-        navigate("/confirmation");
+       
       } else {
-        alert("Failed to place order. Please try again.");
       }
     } catch (error) {
       console.error("Checkout error:", error);
-      alert("An error occurred during checkout.");
     }
   };
 

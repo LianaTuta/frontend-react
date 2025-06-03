@@ -1,3 +1,4 @@
+@import "../styles/constants.css";
 .orders-page {
   max-width: 800px;
   margin: 0 auto;
@@ -107,4 +108,31 @@
 
 .pay-btn:hover {
   background-color: #006400;
+}
+
+.order-status.cancelled {
+  color:var(--color-dark-red);
+  font-weight: bold;
+}
+
+.cancel-btn {
+  background-color: var(--color-dark-red) ;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-left: 8px;
+}
+
+.cancel-btn:hover {
+  background-color: #c53030; 
+}
+
+.time-left-text {
+  margin-left: 10px;
+  color: rgb(169, 123, 23);
+  font-weight: bold;
 }

@@ -208,3 +208,18 @@ select.input-field:focus {
 .hidden-file-input {
   display: none;
 }
+
+
+.react-datepicker__day--disabled {
+  color: #ccc !important;         
+  background-color: #f0f0f0 !important;  
+  cursor: not-allowed !important;  
+  opacity: 0.5 !important;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}

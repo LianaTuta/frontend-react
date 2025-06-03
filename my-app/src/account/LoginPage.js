@@ -10,16 +10,24 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+  
     try {
       const response = await apiService.request("useraccount/login", "POST", {
         email,
         password,
       });
 
+      if(response.status === 400){
+        setError(response.body?.Data?.Message);
+      }
       const token = response.body?.Data?.token;
       if (token) {
         localStorage.setItem("bearer", token);
-        navigate("/all-events");
+        navigate(-1);
       } else {
         setError("Invalid credentials.");
       }

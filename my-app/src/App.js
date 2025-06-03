@@ -15,6 +15,9 @@ import AddEvent from "./events/AddEvent";
 import ConfigureEvents from "./events/ConfigureEvents";
 import AddSchedulePage from "./events/eventDetails/AddSchedule";
 import AddTicketForm from "./events/eventDetails/AddTicket";
+import OrderSuccessPage from "./Order/OrderSuccessPage";
+import PaymentCancelledPage from "./Order/PaymentCancelledPage";
+import ValidateTicketPage from "./Order/ValidateTicket";
 
 const App = () => {
   return (
@@ -36,7 +39,10 @@ const App = () => {
         <Route path="/configure-event" element={<ConfigureEvents />} />
         <Route path="/add-schedule" element={<AddSchedulePage />} />
         <Route path="/add-ticket" element={<AddTicketForm />} />
+        <Route path="/order-success" element={<OrderSuccessPage />} />
+        <Route path="/cancel-payment" element={<PaymentCancelledPage />} />
         <Route path="/order-details" element={<OrderDetailsPage />} />
+        <Route path="/validate-ticket/:code" element={<ValidateTicketPage />} />
          </Route>
       </Routes>
     </Router>
