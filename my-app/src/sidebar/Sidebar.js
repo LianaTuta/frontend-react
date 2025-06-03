@@ -41,8 +41,6 @@ const SidebarLayout = () => {
           <ul className="sidebar-menu">
             <li><Link to="/my-orders" onClick={toggleSidebar}>My Orders</Link></li>
             <li><Link to="/all-events" onClick={toggleSidebar}>Events</Link></li>
-            <li><Link to="/history" onClick={toggleSidebar}>History</Link></li>
-            <li><Link to="/account" onClick={toggleSidebar}>My Account</Link></li>
             {isManager && (
               <li>
                 <Link to="/configure-event" onClick={toggleSidebar}>
