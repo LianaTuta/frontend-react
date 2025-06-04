@@ -120,6 +120,30 @@
   margin-top: 0.2rem;
 }
 
+.order-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+}
+
+
+.download-ticket-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.download-ticket-btn:hover {
+  background: #0056b3;
+}
+
+
 @media (max-width: 768px) {
   .cart-item {
     flex-direction: column;
@@ -136,3 +160,5 @@
     gap: 0.25rem;
   }
 }
+
+

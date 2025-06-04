@@ -52,6 +52,21 @@ const OrderDetailsPage = () => {
     fetchOrderAndEvents();
   }, [orderId]);
 
+  const handleDownloadTicket = async (orderId) => {
+    try {
+      const response = await apiService.request(`ticket/download-ticket/${orderId}`, "GET");
+      console.log(response, response.body?.Data);
+      if (response.status === 200 && response.body?.Data?.downLoadUrl) {
+        window.location.href = response.body.Data.downLoadUrl;
+      } else {
+        setError("Download link not available.");
+      }
+    } catch (error) {
+      console.error("Download failed:", error);
+      setError("Error while generating the download link.");
+    }
+  };
+
   if (loading) return <div className="cart-page">Loading order...</div>;
 
   if (error)
@@ -76,17 +91,14 @@ const OrderDetailsPage = () => {
 
   return (
     <div className="cart-page">
-      <h2>Order #{order.id}</h2>
+      <h2 className="order-header">Order #{order.id}</h2>
       <div className="cart-list">
         {order.details.map((ticket, index) => {
           const event = eventDetailsMap[ticket.eventId];
           return (
             <div key={index} className="cart-item">
               <div className="cart-image-wrapper">
-                <EventImageCard
-                  src={event?.imagePath}
-                  alt={event?.name || ticket.eventName}
-                />
+                <EventImageCard src={event?.imagePath} alt={event?.name || ticket.eventName} />
               </div>
               <div className="cart-item-details">
                 <div className="cart-item-header">
@@ -98,17 +110,23 @@ const OrderDetailsPage = () => {
                   {formatDate(event?.endDate || ticket.eventScheduleEndDate)}
                 </div>
                 <div className="cart-line">Event: {event?.name || ticket.eventName}</div>
-                <div className="cart-line">Location: {event?.location || "N/A"}</div>
+                <button 
+                  className="download-ticket-btn" 
+                  onClick={() => handleDownloadTicket(ticket.id, ticket.ticketName)}
+                >
+                  Download Ticket
+                </button>
               </div>
+           
             </div>
           );
         })}
       </div>
       <div className="cart-summary">
         <div className="cart-total-amount">
-          <span>Total:</span>
-          <span>${order.totalPrice}</span>
+          <strong>Total:</strong> <span>${order.totalPrice}</span>
         </div>
+       
       </div>
     </div>
   );

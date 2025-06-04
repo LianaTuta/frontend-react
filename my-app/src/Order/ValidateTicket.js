@@ -6,6 +6,7 @@ import AuthHelper from "../Common/authHelper";
 import { formatDate } from "../utils/formatDate";
 import { Roles } from "../constants/roleEnum";
 import { TicketStatus } from "./TIcketStatus";
+import useAuthValidation from "../Common/useAuthValidation";
 
 const ValidateTicketPage = () => {
   const { code } = useParams();
@@ -15,7 +16,7 @@ const ValidateTicketPage = () => {
   const [actionLoading, setActionLoading] = useState(false);
 
   const isManager = AuthHelper.hasRole(Roles.MANAGER);
-
+  useAuthValidation();
   const fetchTicket = async () => {
     setLoading(true);
     try {
