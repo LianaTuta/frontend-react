@@ -47,6 +47,7 @@ class AuthHelper {
 
   static logout() {
     localStorage.removeItem("bearer");
+    localStorage.removeItem("cart");
   }
 }
 

@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding: 2rem;
   font-family: var(--font-family-base);
+  align-items: center;
 }
 
 .order-card {
@@ -14,6 +15,8 @@
   margin-bottom: 1.25rem; 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
+
+
 
 .order-header {
   display: flex;

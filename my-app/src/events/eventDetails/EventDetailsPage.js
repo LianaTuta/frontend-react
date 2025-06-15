@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import apiService from "../../Common/apiService";
 import "./EventDetailsPage.css";
 import EventInfo from "./EventInfo";
@@ -23,6 +23,7 @@ const EventDetailsPage = () => {
 
   const [event, setEvent] = useState(eventFromState || {});
   const [showBanner, setShowBanner] = useState(false);
+  const navigate = useNavigate();
 
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -199,8 +200,23 @@ const EventDetailsPage = () => {
     }
   };
 
-  const handleBuyNow = (ticket) => {
+  const handleBuyNow = (ticket, schedule) => {
     console.log("Buying ticket:", ticket);
+    if (!isLoggedIn) {
+      setShowBanner(true);
+      return;
+    }
+
+    addToCart({
+      ...ticket,
+      imagePath: event.imagePath,
+      eventName: event.name,
+      scheduleStart: schedule.startDate,
+      scheduleEnd: schedule.endDate,
+      location: schedule.location,
+    });
+    navigate("/cart");
+
   };
 
   const handleFieldChange = (field, value) => {

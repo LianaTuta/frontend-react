@@ -233,12 +233,17 @@ const EventSchedule = ({
                       )}
 
                       <div className="ticket-actions">
-                        <button className="submit-btn" onClick={() => handleAddToCart(ticket, s)}>
-                          Add to Cart
-                        </button>
-                        <button className="submit-btn" onClick={() => handleBuyNow(ticket)}>
-                          Buy Now
-                        </button>
+                      {!isManager && (
+                          <>
+                            <button className="submit-btn" onClick={() => handleAddToCart(ticket, s)}>
+                              Add to Cart
+                            </button>
+                            <button className="submit-btn" onClick={() => handleBuyNow(ticket, s)}>
+                              Buy Now
+                            </button>
+                          </>
+                        )}
+
                       </div>
                     </div>
                   ))}
