@@ -88,6 +88,32 @@ body {
   background-color: var(--color-accent);
 }
 
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 40px; 
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.char-count {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.password-group {
+  position: relative;
+}
+
 .error-message {
   color: var(--color-error);
   font-size: 0.95rem;

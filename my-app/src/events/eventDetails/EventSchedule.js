@@ -4,6 +4,7 @@ import EditableDateField from "../../Common/EditableDateField";
 import EditableTextField from "../../Common/EditableTextFileld";
 import { FaDollarSign } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import apiService from "../../Common/apiService";
 
 const EventSchedule = ({
   schedules,
@@ -32,7 +33,19 @@ const EventSchedule = ({
     }));
   };
 
-  const confirmChange = (id, field, value) => {
+  const validateTicket = async (ticketId) => {
+    try {
+      const res = await apiService.get(`order/is-valid-ticket/${ticketId}`);
+      if (res.status === 200) {
+        return res.body?.Data?.soldTickets ?? 0;
+      }
+    } catch (err) {
+      console.error("Validation failed", err);
+    }
+    return 0;
+  };
+
+  const confirmChange = async (id, field, value) => {
     const now = new Date();
 
     const schedule = schedules.find((s) => s.id === id);
@@ -41,8 +54,12 @@ const EventSchedule = ({
 
     const errors = {};
 
-    if (field === "startDate" && new Date(start) < now) {
+    if (field === "startDate" && new Date(start) < now ) {
       errors.startDate = "Start date cannot be in the past.";
+    }
+
+    if (field === "startDate" && new Date(start) > new Date(end)) {
+      errors.startDate = "Start date must be before the end date.";
     }
 
     if (field === "endDate" && new Date(end) <= new Date(start)) {
@@ -71,7 +88,11 @@ const EventSchedule = ({
           errors.numberOfAvailableTickets = "Available tickets must be a non-negative integer.";
         } else {
           const intVal = parseInt(trimmedValue, 10);
-          if (intVal < 0) {
+          const remaining = await validateTicket(id);
+      
+          if (intVal <  remaining) {
+            errors.numberOfAvailableTickets = `Value must be at least ${remaining} (currently sold tickets).`;
+          } else if (intVal < 0) {
             errors.numberOfAvailableTickets = "Available tickets must be 0 or more.";
           }
         }
@@ -161,11 +182,7 @@ const EventSchedule = ({
                 error={validationErrors?.[s.id]?.endDate}
               />
             </div>
-
-            {ticketsBySchedule[s.id] ? (
-              ticketsBySchedule[s.id].length > 0 ? (
-                <div className="ticket-list">
-                      {isManager && (
+            {isManager && (
                         <button
                             className="login-btn"
                             style={{ marginBottom: "1rem" }}
@@ -174,6 +191,10 @@ const EventSchedule = ({
                             + Add Ticket
                         </button>
                         )}
+            {ticketsBySchedule[s.id] ? (
+              ticketsBySchedule[s.id].length > 0 ? (
+                <div className="ticket-list">
+                    
                   {ticketsBySchedule[s.id].map((ticket) => (
                     <div key={ticket.id} className="ticket-item">
                      

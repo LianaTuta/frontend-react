@@ -78,6 +78,7 @@ const MyOrdersPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log(  filteredOrders);
     if (orders.length === 0) return; 
   
     const intervalId = setInterval(() => {
@@ -117,6 +118,7 @@ const MyOrdersPage = () => {
   };
 
   const filteredOrders = orders.filter((order) => {
+  
     if (filter !== "all") {
       if (filter === "pending" && !(order.step < OrderStep.Completed && !isPaymentExpired(order.dateCreated))) {
         return false;
@@ -158,6 +160,7 @@ const MyOrdersPage = () => {
 
   return (
     <div className="orders-page">
+      
       <h2>My Orders</h2>
       <OrderFilter
         filter={filter}
@@ -176,7 +179,7 @@ const MyOrdersPage = () => {
         <p>No orders found.</p>
       ) : (
         filteredOrders.map((order) => {
-          const isExpired = order.step === OrderStep.Payment && isPaymentExpired(order.dateCreated);
+          const isExpired = order.step === OrderStep.Expired;
 
           return (
             <div key={order.id} className="order-card">
@@ -248,14 +251,16 @@ const MyOrdersPage = () => {
                       Complete Payment
                     </button>
                   )}
-                  {order.step !== OrderStep.Cancelled && (
-                  <button
-                    className="cancel-btn"
-                    onClick={() => cancelOrder(order.id)}
-                  >
-                    Cancel Order
-                  </button>
-                )}
+                 {order.step !== OrderStep.Cancelled &&
+                  order.details.every((ticket) => new Date(ticket.eventScheduleStartDate) > new Date()) && (
+                    <button
+                      className="cancel-btn"
+                      onClick={() => cancelOrder(order.id)}
+                    >
+                      Cancel Order
+                    </button>
+                  )}
+              
                 </div>
               </div>
             </div>

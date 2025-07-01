@@ -39,7 +39,13 @@ const SidebarLayout = () => {
             <button className="close-sidebar-button" onClick={toggleSidebar}>✕</button>
           </div>
           <ul className="sidebar-menu">
-            <li><Link to="/my-orders" onClick={toggleSidebar}>My Orders</Link></li>
+          {!isManager && (
+              <li>
+                <Link to="/my-orders" onClick={toggleSidebar}>
+                  My Orders
+                </Link>
+              </li>
+            )}
             <li><Link to="/all-events" onClick={toggleSidebar}>Events</Link></li>
             {isManager && (
               <li>

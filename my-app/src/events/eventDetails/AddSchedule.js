@@ -38,16 +38,35 @@ const AddSchedulePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const now = new Date();
+
     const errors = {
       location: !formData.location.trim(),
-      startDate: !formData.startDate,
-      endDate: !formData.endDate
+      startDate:
+        !formData.startDate || new Date(formData.startDate) < now ,
+      startDateError : !formData.startDate || new Date(formData.endDate) <= new Date(formData.startDate),
+      endDate:
+        !formData.endDate ||
+        new Date(formData.endDate) <= new Date(formData.startDate)
     };
-
     setFormError(errors);
     const hasError = Object.values(errors).some(Boolean);
     if (hasError || !eventId) {
-      setMessage("All fields are required.");
+      if (errors.location) {
+        setMessage("Location is required.");
+      } 
+      else if (errors.startDate) {
+        setMessage("Start date must be in the future.");
+      } 
+      else if (errors.endDate) {
+        setMessage("End date must be after the start date.");
+      } 
+      else if (errors.startDateError) {
+        setMessage("Start date must be before the end date ");
+      } 
+      else {
+        setMessage("All fields are required.");
+      }
       return;
     }
     console.log(eventId)

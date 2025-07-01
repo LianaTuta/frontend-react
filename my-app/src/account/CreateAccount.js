@@ -5,6 +5,7 @@ import apiService from "../Common/apiService";
 import { Roles } from "../constants/roleEnum";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 
 const validatePassword = (password) => {
   const minLength = 8;
@@ -25,6 +26,7 @@ const CreateAccount = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [formError, setFormError] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -37,12 +39,11 @@ const CreateAccount = () => {
 
   const handleCreateAccount = async () => {
     const passwordError = validatePassword(password);
-
     const errors = {
       firstName: !firstName,
       lastName: !lastName,
       email: !email,
-      password: !password,
+      password: !password || passwordError,
       birthDate: !birthDate,
     };
   
@@ -83,12 +84,12 @@ const CreateAccount = () => {
         newUser,
         { "Content-Type": "application/json" }
       );
-
       if (response.status === 200) {
         setMessage("Account created successfully!");
         navigate("/login");
       } else {
-        setMessage(response.message || "Failed to create account.");
+        console.log(response.body.message);
+        setMessage(response.body.Data.Message || "Failed to create account.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -166,15 +167,23 @@ const CreateAccount = () => {
           <div className="char-count">{email.length} / 20</div>
         </div>
 
-        <div className="form-group">
+        <div className="form-group password-group">
           <label>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            maxLength={20}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              maxLength={20}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div
+              className="password-toggle"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />} {}
+            </div>
+          </div>
           <div className="char-count">{password.length} / 20</div>
         </div>
 

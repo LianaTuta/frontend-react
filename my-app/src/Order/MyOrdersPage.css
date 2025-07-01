@@ -40,6 +40,12 @@
   font-weight: 600;
 }
 
+
+.order-status.expired {
+  color: #de6b29;
+  font-weight: 600;
+}
+
 .ticket-list {
   margin-top: 1rem;
   display: flex;

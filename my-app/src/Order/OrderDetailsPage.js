@@ -110,12 +110,14 @@ const OrderDetailsPage = () => {
                   {formatDate(event?.endDate || ticket.eventScheduleEndDate)}
                 </div>
                 <div className="cart-line">Event: {event?.name || ticket.eventName}</div>
+                {ticket.ticketDownloadUrl && (
                 <button 
-                  className="download-ticket-btn" 
-                  onClick={() => handleDownloadTicket(ticket.id, ticket.ticketName)}
-                >
-                  Download Ticket
-                </button>
+                className="download-ticket-btn" 
+                onClick={() => handleDownloadTicket(ticket.id, ticket.ticketName)}
+              >
+                Download Ticket
+              </button>
+              )}
               </div>
            
             </div>
